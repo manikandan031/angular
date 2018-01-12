@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { IProduct } from './product';
 import { ProductService } from './product.service';
+import { ViewChild } from '@angular/core';
+import { StarComponent } from '../../shared/star/star.component';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -13,6 +15,7 @@ export class ProductListComponent implements OnInit {
   _listFilter: string = "";
   products: IProduct[] = [];
   filteredProducts: IProduct[];
+  @ViewChild(StarComponent) starComponent: StarComponent;
 
   constructor(private _productService: ProductService) { }
 
@@ -47,6 +50,7 @@ export class ProductListComponent implements OnInit {
 
   onRatingClicked(message: string){
     this.pageTitle = "Product List: " + message;
+    this.starComponent.testViewChild();
   }
 
 }

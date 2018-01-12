@@ -22,4 +22,8 @@ export class StarComponent implements OnChanges {
     this.ratingClicked.emit(`Rating ${this.rating} is clicked`);
   }
 
+  testViewChild(){
+    console.log("Viewing Child");
+  }
+
 }
