@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
 import { ProductsModule } from './products/products.module';
 import { ApproutingModule } from './approuting.module';
+import { CustomerModule } from './customer/customer.module';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ApproutingModule } from './approuting.module';
   imports: [
     BrowserModule,
     ProductsModule,
+    CustomerModule,
     ApproutingModule
   ],
   bootstrap: [AppComponent]
