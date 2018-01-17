@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 
 import { IProduct} from '../product-list/product';
+import { ProductService } from '../product-list/product.service';
 
 @Component({
   templateUrl: './product-detail.component.html',
@@ -13,21 +14,16 @@ export class ProductDetailComponent implements OnInit {
   product: IProduct;
 
   constructor(private _activatedRoute: ActivatedRoute,
-              private _router: Router) { }
+              private _router: Router,
+              private productService: ProductService) { }
 
   ngOnInit() {
     let id = +this._activatedRoute.snapshot.paramMap.get('id');
     console.log(id);
-    this.product = {
-      "productId": 1,
-      "productName": "Leaf Rake",
-      "productCode": "GDN-0011",
-      "releaseDate": "March 19, 2016",
-      "description": "Leaf rake with 48-inch wooden handle.",
-      "price": 196.95,
-      "starRating": 3.2,
-      "imageUrl": "/assets/images/handtool.png"
-    };
+    this.productService.getProduct(id).subscribe((product: IProduct) => {
+      console.log(product);
+      this.product = product;
+    });
   }
 
   onBack(){

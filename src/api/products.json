@@ -1,6 +1,6 @@
 [
     {
-      "productId": 1,
+      "id": 1,
       "productName": "Leaf Rake",
       "productCode": "GDN-0011",
       "releaseDate": "March 19, 2016",
@@ -10,7 +10,7 @@
       "imageUrl": "./assets/images/handtool.png"
     },
     {
-      "productId": 2,
+      "id": 2,
       "productName": "Garden Cart",
       "productCode": "GDN-0023",
       "releaseDate": "May 21, 2016",
@@ -20,7 +20,7 @@
       "imageUrl": "./assets/images/handtool.png"
     },
     {
-      "productId": 5,
+      "id": 5,
       "productName": "Hammer",
       "productCode": "TBX-0048",
       "releaseDate": "May 15, 2016",

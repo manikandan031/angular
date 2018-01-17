@@ -44,10 +44,11 @@
               </span>
             </div>
           </div>
-          <div class="form-group" [ngClass]="{'has-error': (customerForm.get('emailGroup.confirmEmail').touched || customerForm.get('emailGroup.confirmEmail').dirty) && !customerForm.get('emailGroup.confirmEmail').valid }">
+          <div class="form-group" [ngClass]="{'has-error': (customerForm.get('emailGroup.confirmEmail').touched || customerForm.get('emailGroup.confirmEmail').dirty) && (!customerForm.get('emailGroup.confirmEmail').valid || !customerForm.get('emailGroup').valid) }">
             <label class="col-md-2 control-label" for="confirmEmailId">Confirm Email</label>
             <div class="col-md-6">
-              <input class="form-control" type="email" id="confirmEmailId" formControlName="confirmEmail" placeholder="Confirm Email (required)" />
+              <input class="form-control" type="email" id="confirmEmailId" formControlName="confirmEmail" placeholder="Confirm Email (required)"
+              />
               <span class="help-block" *ngIf="(customerForm.get('emailGroup.confirmEmail').touched || customerForm.get('emailGroup.confirmEmail').dirty) && (customerForm.get('emailGroup.confirmEmail').errors || customerForm.get('emailGroup').errors)">
                 <span *ngIf="customerForm.get('emailGroup.confirmEmail').errors?.required">
                   Please confirm your email
@@ -103,56 +104,72 @@
             </label>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-md-2 control-label" for="addressTypeId">Address Type</label>
-          <div class="col-md-6">
-            <label class="radio-inline">
-              <input type="radio" value="home" />Home
-            </label>
-            <label class="radio-inline">
-              <input type="radio" value="work" />Work
-            </label>
-            <label class="radio-inline">
-              <input type="radio" value="other" />Other
-            </label>
+        <div *ngIf="customerForm.get('sendCatalog').value">
+          <div class="form-group">
+            <div class="col-md-4 col-md-offset-2">
+              <span>
+                <button class="btn btn-primary" (click)="addAddress()">Add Address</button>
+              </span>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-2 control-label" for="address1Id">
-            Street Address 1
-          </label>
-          <div class="col-md-6">
-            <input class="form-control" id="address1Id" placeholder="Street Address" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-2 control-label" for="address2Id">
-            Street Address 2
-          </label>
-          <div class="col-md-6">
-            <input class="form-control" id="address2Id" placeholder="Street Address (second line)" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-md-2 control-label">City, State, Zip Code</label>
-          <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="City" />
-          </div>
-          <div class="col-md-3">
-            <select class="form-control">
-              <option value="" disabled selected hidden>Select a state</option>
-              <option value="AL">Alabama</option>
-              <option value="AK">Alaska</option>
-              <option value="AZ">Arizona</option>
-              <option value="AR">Arkansas</option>
-              <option value="CA">California</option>
-              <option value="CO">Colorado</option>
-              <option value="WI">Wisconsin</option>
-              <option value="WY">Wyoming</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <input class="form-control" type="text" placeholder="Zip" />
+          <div formArrayName="addresses" *ngFor="let address of addresses.controls; let i=index">
+            <div [formGroupName]="i">
+              <div class="form-group">
+                <label class="col-md-2 control-label">Address Type</label>
+                <div class="col-md-6">
+                  <label class="radio-inline">
+                    <input type="radio" value="home" formControlName="addressType" />Home
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="work" formControlName="addressType" />Work
+                  </label>
+                  <label class="radio-inline">
+                    <input type="radio" value="other" formControlName="addressType" />Other
+                  </label>
+                </div>
+                <div class="col-md-3" *ngIf="i > 0">
+                    <button class="btn btn-primary" (click)="deleteAddress(i)">Delete</button>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label" attr.for="{{'street1Id' + i}}">
+                  Street Address 1
+                </label>
+                <div class="col-md-6">
+                  <input class="form-control" id="{{'street1Id' + i}}" formControlName="street1" placeholder="Street Address" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label" attr.for="{{'street2Id' + i}}">
+                  Street Address 2
+                </label>
+                <div class="col-md-6">
+                  <input class="form-control" id="{{'street2Id' + i}}" formControlName="street2" placeholder="Street Address (second line)" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-2 control-label">City, State, Zip Code</label>
+                <div class="col-md-3">
+                  <input class="form-control" type="text" formControlName="city" placeholder="City" />
+                </div>
+                <div class="col-md-3">
+                  <select class="form-control" formControlName="state">
+                    <option value="" disabled selected hidden>Select a state</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+                <div class="col-md-3">
+                  <input class="form-control" formControlName="zip" type="text" placeholder="Zip" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="form-group">

@@ -6,24 +6,32 @@ import { RouterModule } from '@angular/router';
 import { ProductService } from './product-list/product.service';
 import { ProductdetailGuardService } from './product-detail/productdetail-guard.service';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ProductsroutingModule } from './productsrouting.module';
+import { ProductEditComponent } from './product-edit/product-edit.component';
+import { InMemoryWebApiModule} from 'angular-in-memory-web-api';
+import { ProductData} from './product.data';
+import { ProductEditDeactivateGuardService } from './product-edit/product-edit.guard.service';
 
 @NgModule({
   imports: [
     CommonModule,
     HttpClientModule,
     SharedModule,
-    ProductsroutingModule
+    ProductsroutingModule,
+    InMemoryWebApiModule.forRoot(ProductData),
+    ReactiveFormsModule
   ],
   declarations: [
     ProductListComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    ProductEditComponent
   ],
   providers: [
     ProductService,
-    ProductdetailGuardService
+    ProductdetailGuardService,
+    ProductEditDeactivateGuardService
   ]
 })
 export class ProductsModule { }

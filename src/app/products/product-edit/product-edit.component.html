@@ -1,0 +1,47 @@
+<div class="panel panel-primary">
+  <div class="panel-heading" *ngIf="product" >
+    Edit Product : {{product.productName}}
+  </div>
+  <div class="panel-body">
+    <form class="form-horizontal" *ngIf="product" [formGroup]="productForm">
+      <fieldset>
+        <div class="form-group">
+          <label class="control-label col-md-2" for="productNameId">Product Name</label>
+          <div class="col-md-6">
+            <input class="form-control" id="productNameId" formControlName="productName" type="text" placeholder="Product Name (required)" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Product Code</label>
+          <div class="col-md-6">
+            <input class="form-control" type="text" formControlName="productCode" placeholder="Product Code (required)" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Star-Rating (1-5)</label>
+          <div class="col-md-6">
+            <input class="form-control" type="number" formControlName="starRating" placeholder="rating">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Price</label>
+          <div class="col-md-6">
+            <input class="form-control" type="number" formControlName="price" placeholder="price">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Description</label>
+          <div class="col-md-6">
+            <textarea class="form-control" formControlName="description" placeholder="description"></textarea>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="panel-footer">
+    <a class="btn btn-default" (click)="onBack()">
+      <i class="glyphicon glyphicon-chevron-left"></i>Back</a>
+    <button class="btn btn-primary" (click)="saveProduct()">Save</button>
+    <button class="btn btn-default" (click)="deleteProduct()">Delete</button>
+  </div>
+</div>

@@ -2,9 +2,47 @@
   <div class="panel-heading">
     {{pageTitle}}: {{product.productName}}
   </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="row">
+          <div class="col-md-3">Name</div>
+          <div class="col-md-6">{{product.productName}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Code</div>
+          <div class="col-md-6">{{product.productCode | convertToSpaces:'-'}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Description</div>
+          <div class="col-md-6">{{product.description}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Release Date</div>
+          <div class="col-md-6">{{product.releaseDate}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Price</div>
+          <div class="col-md-6">{{product.price | currency:'INR':'symbol':'1.2-2'}}</div>
+        </div>
+        <div class="row">
+          <div class="col-md-3">Rating</div>
+          <div class="col-md-6">
+            <pm-star [rating]="product.starRating"></pm-star>
+          </div>
+        </div>
+        
+      </div>
+      <div class="col-md-6">
+        <img [src]="product.imageUrl" [title]="product.productName" class="productDetailImage center-block img-responsive" />
+      </div>
+    </div>
+
+  </div>
   <div class="panel-footer">
     <a class="btn btn-default" (click)="onBack()">
       <i class="glyphicon glyphicon-chevron-left"></i>Back
     </a>
+    <button class="btn btn-primary editbtn" [routerLink]="['/productEdit',product.id]">Edit</button>
   </div>
 </div>

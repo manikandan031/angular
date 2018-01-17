@@ -1,32 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, Validators, FormBuilder, AbstractControl, ValidatorFn } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, AbstractControl, ValidatorFn, FormArray } from '@angular/forms';
+import 'rxjs/add/operator/debounceTime';
 
-/**
- * Custom Validator - A factory function that returns the validator function.
- * Factory function takes the needed params, validator fn can only take one param - AbstractControl
- * @param control
- */
-function rangeValidator(min: number, max: number): ValidatorFn {
-  return (control: AbstractControl): { [key: string]: boolean } | null => {
-    if (control.value != undefined && (isNaN(control.value) || control.value < min || control.value > max)) {
-      return { 'range': true };
-    }
-    return null;
-  }
-}
-
-/**
- * Cross Field Validation
- * @param c 
- */
-function emailMatchesValidator(c: AbstractControl): {[key: string]: boolean} | null{
-  let email = c.get('email');
-  let confirmEmail = c.get('confirmEmail');
-  if(email.pristine || confirmEmail.pristine || email.value == confirmEmail.value){
-    return null
-  }
-  return {'match': true};
-}
+import {NumberValidator} from '../../shared/validators/number.validator';
+import {emailMatchesValidator} from './validators/emailmatches.validator';
 
 @Component({
   templateUrl: './signup.component.html',
@@ -35,8 +12,11 @@ function emailMatchesValidator(c: AbstractControl): {[key: string]: boolean} | n
 export class SignupComponent implements OnInit {
 
   customerForm: FormGroup;
-
   emailMessage: string;
+  get addresses(){
+    return <FormArray>this.customerForm.get('addresses');
+  }
+
   private validationMessages = {
     required: 'Please enter your email address',
     email: 'Please enter a valid email address'
@@ -53,20 +33,21 @@ export class SignupComponent implements OnInit {
       },{validator: emailMatchesValidator}),
       phone: ['', Validators.pattern('[0-9]{10}')],
       notification: ['email'],
-      rating: ['', rangeValidator(1,5)],
-      sendCatalog: true
+      rating: ['', NumberValidator.range(1,5)],
+      sendCatalog: true,
+      addresses: this.fb.array([this.buildAddress()])
     });
     
     //Subscribing to valueChanges Watcher
     this.customerForm.get('notification').valueChanges.subscribe(value => {
       this.setNotification(value);
     });
-
+    //Email Validation messages
     const emailControl = this.customerForm.get('emailGroup.email');
-    emailControl.valueChanges.subscribe(value => {
+    emailControl.valueChanges.debounceTime(1000).subscribe(value => {
       this.setMessage(emailControl);
     });
-
+    console.log(this.customerForm);
   }
 
   /**
@@ -91,5 +72,24 @@ export class SignupComponent implements OnInit {
       this.emailMessage = Object.keys(c.errors)
                                 .map(key => this.validationMessages[key]).join(' ');
     }
+  }
+
+  buildAddress(): FormGroup {
+    return this.fb.group({
+      addressType: 'home',
+      street1: '',
+      street2: '',
+      city: '',
+      state: '',
+      zip: ''
+    });
+  }
+
+  addAddress(): void{
+    this.addresses.push(this.buildAddress());
+  }
+
+  deleteAddress(index: number){
+    this.addresses.removeAt(index);
   }
 }
