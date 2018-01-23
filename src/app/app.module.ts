@@ -8,6 +8,7 @@ import { WelcomeComponent } from './home/welcome.component';
 import { ProductsModule } from './products/products.module';
 import { ApproutingModule } from './approuting.module';
 import { CustomerModule } from './customer/customer.module';
+import { UserModule } from './user/user.module';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CustomerModule } from './customer/customer.module';
     BrowserModule,
     ProductsModule,
     CustomerModule,
+    UserModule,
     ApproutingModule
   ],
   bootstrap: [AppComponent]

@@ -3,6 +3,7 @@ import { IProduct } from './product';
 import { ProductService } from './product.service';
 import { ViewChild } from '@angular/core';
 import { StarComponent } from '../../shared/star/star.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   templateUrl: './product-list.component.html',
@@ -17,11 +18,15 @@ export class ProductListComponent implements OnInit {
   filteredProducts: IProduct[];
   @ViewChild(StarComponent) starComponent: StarComponent;
 
-  constructor(private _productService: ProductService) { }
+  constructor(private _productService: ProductService, private route: ActivatedRoute) { }
 
   ngOnInit() {
     this._productService.getProducts().subscribe(
-      data => this.products = this.filteredProducts = data,
+      data => {
+        this.products = this.filteredProducts = data;
+        this.listFilter = this.route.snapshot.queryParams['filterBy'] || '';
+        this.showImage = this.route.snapshot.queryParams['showImage'] === 'true';
+      },
       err => console.log(err),
       () => console.log("done loading products")
     );    
@@ -32,6 +37,7 @@ export class ProductListComponent implements OnInit {
   }
 
   set listFilter(value: string) {
+    console.log('setter ' + value);
     this._listFilter = value;
     this.filteredProducts = this._listFilter ? this.performFilter(value) : this.products;
   }

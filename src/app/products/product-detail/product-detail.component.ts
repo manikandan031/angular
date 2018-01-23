@@ -18,16 +18,13 @@ export class ProductDetailComponent implements OnInit {
               private productService: ProductService) { }
 
   ngOnInit() {
-    let id = +this._activatedRoute.snapshot.paramMap.get('id');
-    console.log(id);
-    this.productService.getProduct(id).subscribe((product: IProduct) => {
-      console.log(product);
-      this.product = product;
+    this._activatedRoute.data.subscribe(data => {
+      this.product = data['product'];
     });
   }
 
   onBack(){
-    this._router.navigate(['/products']);
+    this._router.navigate(['/products'],{ queryParamsHandling: 'preserve'});
   }
 
 }

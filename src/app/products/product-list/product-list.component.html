@@ -34,13 +34,13 @@
           <td>
             <img *ngIf="showImage" [src]="product.imageUrl" [title]="product.productName" style="width:50px;margin: 2"/>
           </td>
-          <td><a [routerLink]="['/products',product.id]">{{product.productName}}</a></td>
+          <td><a [routerLink]="['/products',product.id]" [queryParams]="{filterBy: listFilter, showImage: showImage}">{{product.productName}}</a></td>
           <td>{{product.productCode | lowercase | convertToSpaces:'-'}}</td>  
           <td>{{product.releaseDate}}</td>
           <td>{{product.price | currency:'INR':'symbol':'1.2-2'}}</td>
           <td><pm-star [rating]="product.starRating" (ratingClicked)="onRatingClicked($event)"></pm-star></td>
-          <td>
-            <button class="btn btn-primary" [routerLink]="['/productEdit',product.id]">Edit</button>
+          <td> 
+            <button class="btn btn-primary" [routerLink]="['/productEdit',product.id]" [queryParams]="{filterBy: listFilter, showImage: showImage}">Edit</button>
           </td>
         </tr>
       </tbody>

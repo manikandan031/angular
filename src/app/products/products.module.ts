@@ -13,6 +13,7 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import { ProductData} from './product.data';
 import { ProductEditDeactivateGuardService } from './product-edit/product-edit.guard.service';
+import { ProductResolver } from './product.resolver';
 
 @NgModule({
   imports: [
@@ -31,7 +32,8 @@ import { ProductEditDeactivateGuardService } from './product-edit/product-edit.g
   providers: [
     ProductService,
     ProductdetailGuardService,
-    ProductEditDeactivateGuardService
+    ProductEditDeactivateGuardService,
+    ProductResolver
   ]
 })
 export class ProductsModule { }

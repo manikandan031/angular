@@ -5,7 +5,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li [routerLinkActive]="['active']">
-        <a [routerLink]="['/welcome']">Welcome</a>
+        <a [routerLink]="['/welcome']">Home</a>
       </li>
       <li [routerLinkActive]="['active']">
         <a [routerLink]="['/products']">Product List</a>
@@ -13,6 +13,17 @@
       <li [routerLinkActive]="['active']">
         <a [routerLink]="['/signup']">Sign Up</a>
       </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+      <li *ngIf="authService.isLoggedIn()">
+        <a>Welcome {{authService.currentUser.userName}}</a>
+      </li>
+      <li [routerLinkActive]="['active']" *ngIf="!authService.isLoggedIn()">
+        <a [routerLink]="['/login']">Login</a>
+      </li>
+      <li [routerLinkActive]="['active']" *ngIf="authService.isLoggedIn()">
+          <a>Logout</a>
+        </li>
     </ul>
   </div>
 </nav>

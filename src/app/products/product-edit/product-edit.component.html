@@ -35,6 +35,23 @@
             <textarea class="form-control" formControlName="description" placeholder="description"></textarea>
           </div>
         </div>
+        <div class="form-group">
+          <label class="control-label col-md-2">Tags</label>
+          <div class="col-md-6">
+            <input type="text" class="form-control" formControlName="newTag" placeholder="tags separated by commas" />
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" (click)="addTag()">Add</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-md-6 col-md-offset-2">
+            <button class="btn btn-default" *ngFor="let t of productForm.get('tags').controls;let i = index" (click)="removeTag(i)">
+              {{t.value}} <span class="glyphicon glyphicon-remove"></span>
+            </button>
+          </div>
+          {{productForm.dirty}}
+        </div>
       </fieldset>
     </form>
   </div>

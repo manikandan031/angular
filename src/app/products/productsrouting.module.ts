@@ -7,14 +7,25 @@ import { ProductDetailComponent } from './product-detail/product-detail.componen
 import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductdetailGuardService } from './product-detail/productdetail-guard.service';
 import { ProductEditDeactivateGuardService } from './product-edit/product-edit.guard.service';
+import { ProductResolver } from './product.resolver';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([
       { path: 'products', component: ProductListComponent },
-      { path: 'products/:id', component: ProductDetailComponent, canActivate: [ProductdetailGuardService] },
-      { path: 'productEdit/:id', component: ProductEditComponent, canDeactivate: [ProductEditDeactivateGuardService]}
+      { 
+        path: 'products/:id', 
+        component: ProductDetailComponent, 
+        canActivate: [ProductdetailGuardService], 
+        resolve: {product: ProductResolver} 
+      },
+      { 
+        path: 'productEdit/:id', 
+        component: ProductEditComponent, 
+        canDeactivate: [ProductEditDeactivateGuardService],
+        resolve: {product: ProductResolver} 
+      }
     ])
   ],
   declarations: [],

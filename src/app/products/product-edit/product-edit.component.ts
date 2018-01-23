@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IProduct } from '../product-list/product';
 import { ProductService } from '../product-list/product.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-product-edit',
@@ -12,7 +12,17 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 export class ProductEditComponent implements OnInit {
 
   product: IProduct;
+  currentProduct: IProduct;
   productForm: FormGroup;
+
+  get tagsArray(){
+    return <FormArray>this.productForm.get('tags');
+  }
+
+  get isDirty(): boolean{
+    this.currentProduct = Object.assign({},this.product, this.productForm.value)
+    return JSON.stringify(this.currentProduct) != JSON.stringify(this.product);
+  }
 
   constructor(private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -25,33 +35,28 @@ export class ProductEditComponent implements OnInit {
                             productCode: '',
                             description: '',
                             price: '',
-                            starRating: ''
+                            starRating: '',
+                            newTag: '',
+                            tags: this.fb.array([])
                           });
-
-    this.route.params.subscribe(params => {
-      let id = +params['id'];
-      this.getProduct(id);
+  this.route.data.subscribe(data => {
+    this.product = data['product'];
+    console.log('DATA ' + this.product.tags);
+    this.productForm.patchValue({
+      productName: this.product.productName,
+      productCode: this.product.productCode,
+      price: this.product.price,
+      description: this.product.description,
+      starRating: this.product.starRating,
     });
-
-  }
-
-  getProduct(id: number): void {
-    if (id == 0) {
-      return;
-    }
-    this.productService.getProduct(id).subscribe((product: IProduct) => {
-      this.product = product;
-      this.productForm.patchValue({
-        productName: this.product.productName,
-        productCode: this.product.productCode,
-        price: this.product.price,
-        description: this.product.description,
-        starRating: this.product.starRating
-      });
+    this.product.tags.forEach(element => {
+      this.tagsArray.push(new FormControl(element));
     });
+  });
   }
 
   deleteProduct(): void {
+    this.product = Object.assign({}, this.product, this.productForm.value);
     if(this.product.id > 0){
       this.productService.deleteProduct(this.product.id);
     }
@@ -60,16 +65,31 @@ export class ProductEditComponent implements OnInit {
 
   saveProduct(){
     if(this.productForm.dirty && this.productForm.valid){
-      console.log('Before Copy ' + this.product);
-      let p = Object.assign({}, this.product, this.productForm.value);
-      console.log('p ' + p);
-      this.productService.saveProduct(p);
+      this.product = Object.assign({}, this.product, this.productForm.value);
+      console.log('SAVE' + this.product);
+      this.productService.saveProduct(this.product);
       this.router.navigate(['/products']);
     }
   }
 
   onBack(){
-    this.router.navigate(['/products']);
+    this.router.navigate(['/products'],{queryParamsHandling: 'preserve'});
+  }
+
+  addTag(){
+    let t = this.productForm.get('newTag').value ? 
+                    this.productForm.get('newTag').value.split(',') : [];
+    t.forEach(element => {
+      this.tagsArray.push(new FormControl(element));
+    });
+    this.productForm.patchValue({
+      newTag: ''
+    });
+  }
+
+  removeTag(i: number){
+    this.tagsArray.removeAt(i);
+    this.productForm.markAsDirty();
   }
 
 }
