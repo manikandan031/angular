@@ -6,8 +6,8 @@ import { ProductEditComponent } from "./product-edit.component";
 export class ProductEditDeactivateGuardService implements CanDeactivate<ProductEditComponent> {
 
     canDeactivate(component : ProductEditComponent): boolean{
-        if(component.isDirty){
-            return confirm('Do you want to navigate away and lose the changes?');
+        if(component.isDirty()){
+            return confirm('Navigate away and lose all changes?');
         }
         return true;
     }

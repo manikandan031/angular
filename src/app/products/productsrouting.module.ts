@@ -8,24 +8,41 @@ import { ProductEditComponent } from './product-edit/product-edit.component';
 import { ProductdetailGuardService } from './product-detail/productdetail-guard.service';
 import { ProductEditDeactivateGuardService } from './product-edit/product-edit.guard.service';
 import { ProductResolver } from './product.resolver';
+import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
+import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
+import { AuthGuard } from '../user/auth-guard.service';
 
 @NgModule({
   imports: [
     CommonModule,
     RouterModule.forChild([
-      { path: 'products', component: ProductListComponent },
-      { 
-        path: 'products/:id', 
-        component: ProductDetailComponent, 
-        canActivate: [ProductdetailGuardService], 
-        resolve: {product: ProductResolver} 
+      {
+        path: 'products',
+        canActivate: [AuthGuard],
+        children: [
+          {
+            path: '',
+            component: ProductListComponent
+          },
+          {
+            path: ':id',
+            component: ProductDetailComponent,
+            canActivate: [ProductdetailGuardService],
+            resolve: { product: ProductResolver }
+          },
+          {
+            path: ':id/edit',
+            component: ProductEditComponent,
+            canDeactivate: [ProductEditDeactivateGuardService],
+            resolve: { product: ProductResolver },
+            children: [
+              { path: '', redirectTo: 'info', pathMatch: 'full' },
+              { path: 'info', component: ProductEditInfoComponent },
+              { path: 'tags', component: ProductEditTagsComponent }
+            ]
+          }
+        ]
       },
-      { 
-        path: 'productEdit/:id', 
-        component: ProductEditComponent, 
-        canDeactivate: [ProductEditDeactivateGuardService],
-        resolve: {product: ProductResolver} 
-      }
     ])
   ],
   declarations: [],

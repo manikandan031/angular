@@ -4,6 +4,7 @@ import { ConvertToSpacesPipe } from './pipes/convert-to-spaces.pipe';
 import { StarComponent } from './star/star.component';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http/src/module';
+import { MessageComponent } from './message/message.component';
 
 @NgModule({
   imports: [
@@ -11,12 +12,12 @@ import { HttpClientModule } from '@angular/common/http/src/module';
   ],
   declarations: [
     ConvertToSpacesPipe,
-    StarComponent
+    StarComponent,
   ],
   exports: [
     ConvertToSpacesPipe,
     StarComponent,
-    FormsModule
+    FormsModule,
   ]
 })
 export class SharedModule { }

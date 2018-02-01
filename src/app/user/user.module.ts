@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { SharedModule} from '../shared/shared.module';
 import { AuthService } from './auth.service';
+import { AuthGuard } from './auth-guard.service';
 
 @NgModule({
   imports: [
@@ -14,6 +15,9 @@ import { AuthService } from './auth.service';
     ])
   ],
   declarations: [LoginComponent],
-  providers: [AuthService]
+  providers: [
+    AuthService,
+    AuthGuard
+  ]
 })
 export class UserModule { }

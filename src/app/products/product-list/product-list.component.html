@@ -40,7 +40,7 @@
           <td>{{product.price | currency:'INR':'symbol':'1.2-2'}}</td>
           <td><pm-star [rating]="product.starRating" (ratingClicked)="onRatingClicked($event)"></pm-star></td>
           <td> 
-            <button class="btn btn-primary" [routerLink]="['/productEdit',product.id]" [queryParams]="{filterBy: listFilter, showImage: showImage}">Edit</button>
+            <button class="btn btn-primary" [routerLink]="['/products',product.id,'edit']" [queryParams]="{filterBy: listFilter, showImage: showImage}">Edit</button>
           </td>
         </tr>
       </tbody>

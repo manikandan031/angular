@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   userName: string;
   password: string;
+  loginError: boolean;
   constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit() {
@@ -18,12 +19,20 @@ export class LoginComponent implements OnInit {
 
   login(loginForm: NgForm){
     console.log('login');
-    this.authService.login(this.userName, this.password);
-    if(this.authService.redirectUrl){
-      this.router.navigateByUrl(this.authService.redirectUrl);
-    }else{
-      this.router.navigate(['/products']);
+    this.loginError = !this.authService.login(this.userName, this.password);
+    console.log(this.loginError);
+    if(!this.loginError){
+      if(this.authService.redirectUrl){
+        this.router.navigateByUrl(this.authService.redirectUrl);
+      }else{
+        this.router.navigate(['/products']);
+      }
     }
+    
+  }
+
+  cancel(){
+    this.router.navigate(['/welcome']);
   }
 
 }

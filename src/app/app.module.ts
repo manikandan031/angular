@@ -9,6 +9,8 @@ import { ProductsModule } from './products/products.module';
 import { ApproutingModule } from './approuting.module';
 import { CustomerModule } from './customer/customer.module';
 import { UserModule } from './user/user.module';
+import { SharedModule } from './shared/shared.module';
+import { MessageModule } from './shared/message/message.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { UserModule } from './user/user.module';
     ProductsModule,
     CustomerModule,
     UserModule,
+    SharedModule,
+    MessageModule,
     ApproutingModule
   ],
   bootstrap: [AppComponent]

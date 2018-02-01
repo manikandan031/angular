@@ -9,22 +9,23 @@ export class AuthService {
   redirectUrl: string;
   constructor() { }
 
+  isLoggedIn(): boolean{
+    return !!this.currentUser;
+  }
+
   login(userName: string, password: string): boolean{
-    console.log(this.redirectUrl);
-    this.currentUser = {
-      userName: userName,
-      password: password
-    }
     if(userName == 'admin' && password == 'admin'){
+      this.currentUser = {
+        userName: userName,
+        password: password
+      }
       return true;
     }
     return false;
   }
 
-  isLoggedIn(): boolean{
-    if(this.currentUser){
-      return true;
-    }
-    return false;
+  logout(){
+    this.currentUser = null;
   }
+
 }

@@ -14,6 +14,9 @@ import { InMemoryWebApiModule} from 'angular-in-memory-web-api';
 import { ProductData} from './product.data';
 import { ProductEditDeactivateGuardService } from './product-edit/product-edit.guard.service';
 import { ProductResolver } from './product.resolver';
+import { ProductEditInfoComponent } from './product-edit/product-edit-info.component';
+import { ProductEditTagsComponent } from './product-edit/product-edit-tags.component';
+import { delay } from 'q';
 
 @NgModule({
   imports: [
@@ -21,13 +24,15 @@ import { ProductResolver } from './product.resolver';
     HttpClientModule,
     SharedModule,
     ProductsroutingModule,
-    InMemoryWebApiModule.forRoot(ProductData),
+    InMemoryWebApiModule.forRoot(ProductData, {delay: 1000}),
     ReactiveFormsModule
   ],
   declarations: [
     ProductListComponent,
     ProductDetailComponent,
-    ProductEditComponent
+    ProductEditComponent,
+    ProductEditInfoComponent,
+    ProductEditTagsComponent
   ],
   providers: [
     ProductService,

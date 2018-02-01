@@ -1,3 +1,4 @@
+<span class="loading" *ngIf="loading"></span>
 <nav class="navbar navbar-default">
   <div class="container-fluid">
     <div class="navbar-header">
@@ -18,15 +19,28 @@
       <li *ngIf="authService.isLoggedIn()">
         <a>Welcome {{authService.currentUser.userName}}</a>
       </li>
+      <li *ngIf="!displayMessages">
+        <a (click)="showMessages()">show messages</a>
+      </li>
+      <li *ngIf="displayMessages">
+          <a (click)="hideMessages()">Hide messages</a>
+        </li>
       <li [routerLinkActive]="['active']" *ngIf="!authService.isLoggedIn()">
         <a [routerLink]="['/login']">Login</a>
       </li>
       <li [routerLinkActive]="['active']" *ngIf="authService.isLoggedIn()">
-          <a>Logout</a>
-        </li>
+        <a (click)="logout()">Logout</a>
+      </li>
     </ul>
   </div>
 </nav>
 <div class="container">
-  <router-outlet></router-outlet>
+  <div class="row">
+    <div class="col-md-10">
+      <router-outlet></router-outlet>
+    </div>
+    <div class="col-md-2">
+      <router-outlet name="popup"></router-outlet>
+    </div>
+  </div>
 </div>

@@ -1,0 +1,41 @@
+<div class="panel-body">
+    <form class="form-horizontal" [formGroup]="productInfoForm">
+        <fieldset>
+            <legend>Basic Product Information</legend>
+            <div class="form-group" [ngClass]="{'has-error': productInfoForm.get('productName').dirty && !productInfoForm.get('productName').valid}">
+                <label class="control-label col-md-2">Product Name</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName="productName" [(ngModel)] = "product.productName" placeholder="Product Name (required)" />
+                    <span class="help-block" *ngIf="!productInfoForm.get('productName').valid">
+                        <span *ngIf="productInfoForm.get('productName').errors.required">
+                            Product Name is required
+                        </span>
+                    </span>
+                </div>
+
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': productInfoForm.get('productCode').dirty && !productInfoForm.get('productCode').valid}">
+                <label class="control-label col-md-2">Product Code</label>
+                <div class="col-md-6">
+                    <input type="text" class="form-control" formControlName="productCode" [(ngModel)] = "product.productCode" placeholder="Product Code (required)" />
+                    <span class="help-block" *ngIf="!productInfoForm.get('productCode').valid">
+                        <span *ngIf="productInfoForm.get('productCode').errors.required">
+                            Product Code is required
+                        </span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" [ngClass]="{'has-error': productInfoForm.get('description').dirty && !productInfoForm.get('description').valid}">
+                <label class="control-label col-md-2">Description</label>
+                <div class="col-md-6">
+                    <textarea class="form-control" formControlName="description" [(ngModel)] = "product.description" placeholder="description"></textarea>
+                    <span class="help-block" *ngIf="!productInfoForm.get('description').valid">
+                        <span *ngIf="productInfoForm.get('description').errors.required">
+                            Description is required
+                        </span>
+                    </span>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
