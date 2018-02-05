@@ -16,10 +16,6 @@ import { AuthGuard } from '../user/auth-guard.service';
   imports: [
     CommonModule,
     RouterModule.forChild([
-      {
-        path: 'products',
-        canActivate: [AuthGuard],
-        children: [
           {
             path: '',
             component: ProductListComponent
@@ -41,8 +37,6 @@ import { AuthGuard } from '../user/auth-guard.service';
               { path: 'tags', component: ProductEditTagsComponent }
             ]
           }
-        ]
-      },
     ])
   ],
   declarations: [],

@@ -5,7 +5,6 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './home/welcome.component';
-import { ProductsModule } from './products/products.module';
 import { ApproutingModule } from './approuting.module';
 import { CustomerModule } from './customer/customer.module';
 import { UserModule } from './user/user.module';
@@ -19,7 +18,6 @@ import { MessageModule } from './shared/message/message.module';
   ],
   imports: [
     BrowserModule,
-    ProductsModule,
     CustomerModule,
     UserModule,
     SharedModule,
