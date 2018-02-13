@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError, NavigationCancel } from '@angular/router';
 import { AuthService } from './user/auth.service';
 
@@ -7,13 +7,17 @@ import { AuthService } from './user/auth.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
+
   title = 'Acme Product Management';
   loading: boolean = true;
   displayMessages: boolean = false;
 
   constructor(private authService: AuthService, private router: Router){
-    this.router.events.subscribe((routerEvent: Event) => {
+  }
+
+  ngOnInit(): void {
+    this.router.events.subscribe((routerEvent) => {
       this.checkRoutingEvents(routerEvent);
     });
   }
