@@ -8,6 +8,9 @@ exports.config = {
   specs: [
     './e2e/**/*.e2e-spec.ts'
   ],
+  suites: {
+    products: './e2e/products/*.e2e-spec.ts'
+  },
   capabilities: {
     'browserName': 'chrome'
   },
@@ -19,10 +22,11 @@ exports.config = {
     defaultTimeoutInterval: 30000,
     print: function() {}
   },
-  onPrepare() {
+  onPrepare: function() {
     require('ts-node').register({
       project: 'e2e/tsconfig.e2e.json'
     });
     jasmine.getEnv().addReporter(new SpecReporter({ spec: { displayStacktrace: true } }));
+    
   }
 };
